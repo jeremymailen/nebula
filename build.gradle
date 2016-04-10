@@ -1,0 +1,24 @@
+plugins {
+    id "application"
+    id "com.zoltu.kotlin" version "1.0.1-1"
+}
+
+def kotlinVersion = '1.0.1-1'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+             "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    testCompile("org.jetbrains.kotlin:kotlin-test:$kotlinVersion",
+                "org.jetbrains.spek:spek:0.1.195")
+}
+
+run {
+    main = 'org.jmailen.nebula.MainKt'
+    args '--mode=web', '--port=8080'
+    environment('VERSION', project.nebulaVersion)
+}
