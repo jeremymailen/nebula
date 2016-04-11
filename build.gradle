@@ -30,3 +30,8 @@ run {
 startScripts {
     mainClassName = 'org.jmailen.nebula.MainKt'
 }
+
+task image(type: Exec, dependsOn: distTar, group: 'build') {
+    description 'Build Docker image'
+    commandLine 'docker', 'build', '-t', "jmailen/nebula:$project.nebulaVersion", './'
+}
