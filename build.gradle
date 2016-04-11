@@ -4,15 +4,19 @@ plugins {
 }
 
 def kotlinVersion = '1.0.1-1'
+def springBootVersion = '1.4.0.M1'
 
 repositories {
     jcenter()
     mavenCentral()
+    maven { url "http://repo.spring.io/milestone" }
 }
 
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-             "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+            "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion",
+            "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
+            "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion")
     testCompile("org.jetbrains.kotlin:kotlin-test:$kotlinVersion",
                 "org.jetbrains.spek:spek:0.1.195")
 }
@@ -21,4 +25,8 @@ run {
     main = 'org.jmailen.nebula.MainKt'
     args '--mode=web', '--port=8080'
     environment('VERSION', project.nebulaVersion)
+}
+
+startScripts {
+    mainClassName = 'org.jmailen.nebula.MainKt'
 }

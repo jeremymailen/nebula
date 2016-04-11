@@ -23,3 +23,4 @@ Install necessary tooling via `brew`:
 ## Running
 
     gradle run
+    http://localhost:8080/health
