@@ -1,14 +1,14 @@
 server:
-  port: 8080
+  port: 8002
   undertow:
     accesslog:
       enabled: true
       pattern: '%t %a "%r" %s (%D ms)'
   error:
     whitelabel:
-      enabled: false
+      enabled: true
 
 logging:
   level:
-    org.jmailen: 'INFO'
+    org.jmailen: 'DEBUG'
     org.springframework: 'INFO'

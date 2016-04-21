@@ -36,7 +36,7 @@ Run tests and code checkers:
 ## Running
 
     gradle run
-    http://localhost:8080/health
+    http://localhost:8002/health
 
 For remote debugging (will pause until debugger connected):
 
@@ -52,8 +52,8 @@ Build image at desired version:
 
 Push and run:
 
-    docker run -d -p 8080:8080 --name nebula jmailen/nebula:1.0
+    docker run -d -p 8002:8002 --name nebula jmailen/nebula:1.0
     docker logs -f nebula
-    http://DOCKER_MACHINE_IP:8080/health
+    http://DOCKER_MACHINE_IP:8002/health
     docker stop nebula
     docker rm nebula
