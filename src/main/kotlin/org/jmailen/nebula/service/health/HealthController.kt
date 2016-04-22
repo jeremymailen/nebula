@@ -9,7 +9,5 @@ import org.springframework.web.bind.annotation.RestController
 class HealthController {
 
     @RequestMapping("")
-    fun health(): serviceMetadata {
-        return serviceMetadata
-    }
+    fun health() = serviceMetadata
 }

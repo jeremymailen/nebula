@@ -23,6 +23,5 @@ class ProfileStoreSpec : Spek() { init {
                         Profile("Ray Norquist", "415123456")))
             }
         }
-
     }
 }}

@@ -6,11 +6,9 @@ import org.springframework.web.bind.annotation.RestController
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 
 @RestController
-@RequestMapping("/profile")
+@RequestMapping("/profiles")
 class ProfileController @Autowired constructor(val store: ProfileStore) {
 
     @RequestMapping("")
-    fun list(): Iterable<Profile> {
-        return store.list()
-    }
+    fun list() = store.list()
 }
