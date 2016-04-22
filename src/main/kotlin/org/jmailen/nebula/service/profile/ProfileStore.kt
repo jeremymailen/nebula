@@ -1,4 +1,4 @@
-package org.jmailen.nebula.service.profiles
+package org.jmailen.nebula.service.profile
 
 import org.springframework.stereotype.Component
 import java.util.HashSet

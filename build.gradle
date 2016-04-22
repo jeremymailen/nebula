@@ -1,15 +1,16 @@
 plugins {
     id "application"
-    id "com.zoltu.kotlin" version "1.0.1-1"
+    id "com.zoltu.kotlin" version "1.0.1-2"
 }
 
-def kotlinVersion = '1.0.1-1'
+def kotlinVersion = '1.0.1-2'
 def springBootVersion = '1.4.0.M1'
 
 repositories {
     jcenter()
     mavenCentral()
     maven { url "http://repo.spring.io/milestone" }
+    maven { url "http://repository.jetbrains.com/all" }
 }
 
 dependencies {
@@ -23,7 +24,6 @@ dependencies {
 
 run {
     main = 'org.jmailen.nebula.MainKt'
-    args '--mode=web', '--port=8080'
     environment('VERSION', project.nebulaVersion)
 }
 
