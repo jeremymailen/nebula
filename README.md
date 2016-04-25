@@ -1,4 +1,7 @@
-# Nebula - Kotlin / Java backend service
+# Nebula - Example Kotlin / Java Spring Boot Service
+
+Demonstrates how Kotlin beautifies developing in the Java ecosystem.
+It enhances productivity while maintaining complete interoperability with Java and the best frameworks and tooling.
 
 ## Setup
 
@@ -17,7 +20,7 @@ Install necessary tooling via `brew`:
 
 ### Install Docker
 
-Used for building and running distributable images
+Used for building and running distributable images (optional).
 
     brew install docker docker-machine
     docker-machine create --driver virtualbox default
@@ -37,6 +40,8 @@ Run tests and code checkers:
 
     gradle run
     http://localhost:8002/health
+    http://localhost:8002/profiles
+    http://localhost:8002/profiles/1
 
 For remote debugging (will pause until debugger connected):
 

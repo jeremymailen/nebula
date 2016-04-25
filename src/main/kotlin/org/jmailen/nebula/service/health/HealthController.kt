@@ -1,6 +1,6 @@
 package org.jmailen.nebula.service.health
 
-import org.jmailen.nebula.serviceMetadata
+import org.jmailen.nebula.ServiceMetadata
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController
 class HealthController {
 
     @RequestMapping("")
-    fun health() = serviceMetadata
+    fun health() = ServiceMetadata
 }

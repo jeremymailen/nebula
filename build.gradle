@@ -18,7 +18,7 @@ dependencies {
             "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion",
             "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
             "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion")
-    testCompile("org.jetbrains.kotlin:kotlin-test:$kotlinVersion",
+    testCompile("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion",
                 "org.jetbrains.spek:spek:0.1.195")
 }
 
