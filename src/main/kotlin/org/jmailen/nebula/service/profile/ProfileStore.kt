@@ -23,7 +23,7 @@ enum class ProfileStatus {
 @Component
 class ProfileStore(val profileMap: MutableMap<Int, Profile> = hashMapOf(jeremy.id to jeremy, ray.id to ray)) {
 
-    fun list() = profileMap.values.asIterable()
+    fun list() = profileMap.values
 
     fun get(id: Int) = profileMap[id]
 
@@ -32,9 +32,9 @@ class ProfileStore(val profileMap: MutableMap<Int, Profile> = hashMapOf(jeremy.i
         val original = profileMap[profile.id]
         profileMap += profile.id to profile
 
-        when (original != null) {
-            true  -> return original!! to ProfileStatus.REPLACED
-            false -> return profile to ProfileStatus.CREATED
+        return when (original != null) {
+            true  -> original!! to ProfileStatus.REPLACED
+            false -> profile to ProfileStatus.CREATED
         }
     }
 

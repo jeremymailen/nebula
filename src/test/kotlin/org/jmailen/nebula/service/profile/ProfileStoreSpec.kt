@@ -56,9 +56,9 @@ class ProfileStoreSpec : Spek() { init {
 
         on("clear") {
             var subject = ProfileStore()
+            subject.clear()
 
             it("removes all profiles") {
-                subject.clear()
                 assertThat(subject.profileMap.count(), equalTo(0))
             }
         }
