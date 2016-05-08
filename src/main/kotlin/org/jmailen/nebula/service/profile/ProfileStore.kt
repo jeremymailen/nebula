@@ -21,11 +21,11 @@ enum class ProfileStatus {
  * @param profileMap initial content of store, defaults to test values.
  */
 @Component
-class ProfileStore(val profileMap: MutableMap<Int, Profile> = hashMapOf(jeremy.id to jeremy, ray.id to ray)) {
+open class ProfileStore(val profileMap: MutableMap<Int, Profile> = hashMapOf(jeremy.id to jeremy, ray.id to ray)) {
 
     fun list() = profileMap.values
 
-    fun get(id: Int) = profileMap[id]
+    open fun get(id: Int) = profileMap[id]
 
     fun update(profile: Profile): Pair<Profile, ProfileStatus> {
         // neat example of operators on collections and Pairs (tuples)
