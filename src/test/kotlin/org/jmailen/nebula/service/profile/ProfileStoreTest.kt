@@ -8,8 +8,15 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class ProfileStoreTest {
-    var subject = ProfileStore()
+class ProfileStoreTest() {
+
+    /**
+     * lateinit satisfies non-nullable. Other way would be to delegate the property:
+     * ```
+     * var subject: ProfileStore by Delegates.notNull()
+     * ```
+     */
+   lateinit var subject: ProfileStore
 
     @Before fun setup() {
         subject = ProfileStore()
