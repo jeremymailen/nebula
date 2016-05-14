@@ -5,11 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 
 val ProfileIds = AtomicInteger(1)
-
 data class Profile(var id: Int = ProfileIds.andIncrement, var name: String, var phone: String)
-
-val jeremy = Profile(name = "Jeremy Malken", phone = "+12141234567")
-val ray = Profile(name = "Ray Norquist", phone = "+14151234567")
 
 enum class ProfileStatus {
     CREATED, REPLACED, DELETED
@@ -21,14 +17,13 @@ enum class ProfileStatus {
  * @param profileMap initial content of store, defaults to test values.
  */
 @Component
-open class ProfileStore(val profileMap: MutableMap<Int, Profile> = hashMapOf(jeremy.id to jeremy, ray.id to ray)) {
+open class ProfileStore(val profileMap: MutableMap<Int, Profile> = testProfiles()) {
 
     fun list() = profileMap.values
 
     open fun get(id: Int) = profileMap[id]
 
     fun update(profile: Profile): Pair<Profile, ProfileStatus> {
-        // neat example of operators on collections and Pairs (tuples)
         val original = profileMap[profile.id]
         profileMap += profile.id to profile
 
@@ -42,3 +37,7 @@ open class ProfileStore(val profileMap: MutableMap<Int, Profile> = hashMapOf(jer
         profileMap.clear()
     }
 }
+
+val jeremy = Profile(name = "Jeremy Malken", phone = "+12141234567")
+val ray = Profile(name = "Ray Norquist", phone = "+14151234567")
+fun testProfiles() = hashMapOf(jeremy.id to jeremy, ray.id to ray)

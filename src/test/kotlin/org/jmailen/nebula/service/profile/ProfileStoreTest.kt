@@ -5,17 +5,13 @@ import org.hamcrest.CoreMatchers.hasItems
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class ProfileStoreTest() {
-
-    /**
-     * lateinit satisfies non-nullable. Other way would be to delegate the property:
-     * ```
-     * var subject: ProfileStore by Delegates.notNull()
-     * ```
-     */
    lateinit var subject: ProfileStore
 
     @Before fun setup() {
@@ -33,21 +29,34 @@ class ProfileStoreTest() {
         assertNull(subject.get(999))
     }
 
-    @Test fun updateWithNew() {
-        val george = Profile(name = "George Georgio", phone = "+19161234567")
-        val result = subject.update(george)
-        assertThat(result, equalTo(george to ProfileStatus.CREATED))
-    }
-
-    @Test fun updateExisting() {
-        val modJeremy = jeremy.copy()
-        modJeremy.phone = "+14153217654"
-        val result = subject.update(modJeremy)
-        assertThat(result, equalTo(jeremy to ProfileStatus.REPLACED))
-    }
-
     @Test fun clear() {
         subject.clear()
         assertThat(subject.profileMap.size, equalTo(0))
+    }
+}
+
+@RunWith(Parameterized::class)
+class ProfileStoreUpdateTest(val input: Profile, val expected: Pair<Profile, ProfileStatus>) {
+
+    companion object {
+        val newJeremy = Profile(1, "Jeremy Malken", "+14153217654")
+        val george = Profile(3, "George Georgio", "+19161234567")
+
+        @JvmStatic @Parameters(name = "{0} => {1}")
+        fun data() = listOf(
+                arrayOf(george, george to ProfileStatus.CREATED),
+                arrayOf(ray, ray to ProfileStatus.REPLACED),
+                arrayOf(newJeremy, jeremy to ProfileStatus.REPLACED)
+        )
+    }
+
+    lateinit var subject: ProfileStore
+
+    @Before fun setup() {
+        subject = ProfileStore()
+    }
+
+    @Test fun update() {
+        assertThat(subject.update(input), equalTo(expected))
     }
 }
