@@ -1,9 +1,17 @@
 # Nebula - Example Kotlin / Java Spring Boot Service
 
-Demonstrates how Kotlin beautifies developing in the Java ecosystem.
-It enhances productivity while maintaining complete interoperability with Java and the best frameworks and tooling.
+Demonstrates how Kotlin improves developing in the Java ecosystem.
+
+This project goes beyond the typical demo to answer what it might look like to build a Java ecosystem service in Kotlin which leverages popular frameworks and tools:
+- Spring Boot and Spring MVC
+- JUnit and Mockito
+- Gradle and Docker
+
+Objective is to demonstrate not only compatibility but more concise, safe, and expressive code. Caveat: I'm just learning Kotlin.
 
 ## Setup
+
+Assuming an OSX development environment. Reasonable equivalents available on Linux and Windows.
 
 Install necessary tooling via `brew`:
 
