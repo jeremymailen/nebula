@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletResponse
 
+const val PROFILE_API_PATH = "/profiles"
+
 @RestController
-@RequestMapping("/profiles")
+@RequestMapping(PROFILE_API_PATH)
 class ProfileController @Autowired constructor(val store: ProfileStore) {
 
     @RequestMapping("")
