@@ -61,7 +61,7 @@ Of course you could just run with debugging from IDEA.
 
 Build image at desired version:
 
-    gradle -PnebulaVersion=1.0 image
+    gradle -Pversion=1.0 image
 
 Push and run:
 

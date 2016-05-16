@@ -31,14 +31,16 @@ test.testLogging {
 
 run {
     main = 'org.jmailen.nebula.MainKt'
-    environment('VERSION', project.nebulaVersion)
+    environment('VERSION', project.version)
 }
 
 startScripts {
     mainClassName = 'org.jmailen.nebula.MainKt'
 }
 
+distTar.archiveName = 'nebula.tar'
+
 task image(type: Exec, dependsOn: distTar, group: 'build') {
     description 'Build Docker image'
-    commandLine 'docker', 'build', '-t', "jmailen/nebula:$project.nebulaVersion", './'
+    commandLine 'docker', 'build', '-t', "jmailen/nebula:$project.version", './'
 }
