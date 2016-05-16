@@ -24,6 +24,11 @@ dependencies {
                 'com.nhaarman:mockito-kotlin:0.4.0')
 }
 
+test.testLogging {
+    exceptionFormat 'full'
+    stackTraceFilters 'entry_point'
+}
+
 run {
     main = 'org.jmailen.nebula.MainKt'
     environment('VERSION', project.nebulaVersion)
