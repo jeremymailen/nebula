@@ -1,5 +1,7 @@
 # Nebula - Example Kotlin / Java Spring Boot Service
 
+[![Build Status](https://travis-ci.org/jeremymailen/nebula.svg?branch=master)](https://travis-ci.org/jeremymailen/nebula)
+
 Demonstrates how Kotlin improves developing in the Java ecosystem.
 
 This project goes beyond the typical demo to answer what it might look like to build a Java ecosystem service in Kotlin which leverages popular frameworks and tools:
