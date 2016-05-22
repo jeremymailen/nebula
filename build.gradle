@@ -17,11 +17,14 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
             "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion",
             "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
-            "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion")
+            "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"
+    )
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion",
-                'com.natpryce:hamkrest:1.1.0.0',
                 "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion",
-                'com.nhaarman:mockito-kotlin:0.4.0')
+                'com.natpryce:hamkrest:1.1.0.0',
+                'com.nhaarman:mockito-kotlin:0.4.0',
+                'org.jetbrains.spek:spek:1.0.24'
+    )
 }
 
 test.testLogging {
