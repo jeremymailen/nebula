@@ -1,9 +1,9 @@
 package org.jmailen.nebula.service
 
-import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.equalTo
+import org.hamcrest.CoreMatchers.equalTo
 import org.jmailen.nebula.Service
 import org.jmailen.nebula.service.health.HEALTH_API_PATH
+import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
