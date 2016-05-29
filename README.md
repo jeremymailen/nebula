@@ -49,9 +49,9 @@ Run tests and code checkers:
 ## Running
 
     gradle run
-    http://localhost:8002/health
-    http://localhost:8002/profiles
-    http://localhost:8002/profiles/1
+    http://localhost:8002/api/health
+    http://localhost:8002/api/profiles
+    http://localhost:8002/api/profiles/1
 
 For remote debugging (will pause until debugger connected):
 
@@ -69,6 +69,6 @@ Push and run:
 
     docker run -d -p 8002:8002 --name nebula jmailen/nebula:1.0
     docker logs -f nebula
-    http://DOCKER_MACHINE_IP:8002/health
+    http://DOCKER_MACHINE_IP:8002/api/health
     docker stop nebula
     docker rm nebula
