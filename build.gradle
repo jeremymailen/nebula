@@ -14,17 +14,16 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-            "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion",
-            "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
-            "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"
-    )
-    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion",
-                "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion",
-                'com.natpryce:hamkrest:1.1.0.0',
-                'com.nhaarman:mockito-kotlin:0.4.0',
-                'org.jetbrains.spek:spek:1.0.24'
-    )
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+    testCompile 'com.natpryce:hamkrest:1.1.0.0'
+    testCompile 'com.nhaarman:mockito-kotlin:0.4.0'
+    testCompile 'org.jetbrains.spek:spek:1.0.24'
 }
 
 test.testLogging {
@@ -42,6 +41,7 @@ startScripts {
 }
 
 distTar.archiveName = 'nebula.tar'
+distZip.enabled = false
 
 task image(type: Exec, dependsOn: distTar, group: 'build') {
     description 'Build Docker image'
