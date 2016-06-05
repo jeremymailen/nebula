@@ -2,61 +2,55 @@ package org.jmailen.nebula.service.profile
 
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.hasItems
+import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertThat
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
-import org.junit.runners.Parameterized.Parameters
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
-class ProfileStoreTest() {
-   lateinit var subject: ProfileStore
+data class TestCase<out I, out E>(val input: I, val expected: E)
 
-    @Before fun setup() {
-        subject = ProfileStore()
+class ProfileStoreTest : Spek({
+
+    describe("ProfileStore") {
+        var subject: ProfileStore = ProfileStore()
+
+        beforeEach {
+            subject = ProfileStore()
+        }
+
+        on("clear") {
+            it("removes all profiles") {
+                subject.clear()
+                assertThat(subject.list().size, equalTo(0))
+            }
+        }
+
+        on("list") {
+            it("lists all profiles") {
+                assertThat(subject.list(), hasItems(jeremy, ray))
+            }
+        }
+
+        on("get") {
+            arrayOf(TestCase(1, jeremy),
+                    TestCase(2, ray)).forEach { tc ->
+
+                it("returns ${tc.expected.name} for ${tc.input}") {
+                    assertThat(subject.get(tc.input), equalTo(tc.expected))
+                }
+            }
+        }
+
+        on("update") {
+            val newJeremy = Profile(1, "Jeremy Malken", "+14153217654")
+            val george = Profile(3, "George Georgio", "+19161234567")
+
+            arrayOf(TestCase(george, george to ProfileStatus.CREATED),
+                    TestCase(newJeremy, jeremy to ProfileStatus.REPLACED),
+                    TestCase(ray, ray to ProfileStatus.REPLACED)).forEach { tc ->
+
+                it("${tc.expected.second} profile ${tc.input.id}") {
+                        assertThat(subject.update(tc.input), equalTo(tc.expected))
+                }
+            }
+        }
     }
-
-    @Test fun list() {
-        val results = subject.list()
-        assertEquals(2, results.size)
-        assertThat(results, hasItems(jeremy, ray))
-    }
-
-    @Test fun get() {
-        assertEquals(ray, subject.get(2))
-        assertNull(subject.get(999))
-    }
-
-    @Test fun clear() {
-        subject.clear()
-        assertThat(subject.profileMap.size, equalTo(0))
-    }
-}
-
-@RunWith(Parameterized::class)
-class ProfileStoreUpdateTest(val input: Profile, val expected: Pair<Profile, ProfileStatus>) {
-
-    companion object {
-        val newJeremy = Profile(1, "Jeremy Malken", "+14153217654")
-        val george = Profile(3, "George Georgio", "+19161234567")
-
-        @JvmStatic @Parameters(name = "{0} => {1}")
-        fun data() = listOf(
-                arrayOf(george, george to ProfileStatus.CREATED),
-                arrayOf(ray, ray to ProfileStatus.REPLACED),
-                arrayOf(newJeremy, jeremy to ProfileStatus.REPLACED)
-        )
-    }
-
-    lateinit var subject: ProfileStore
-
-    @Before fun setup() {
-        subject = ProfileStore()
-    }
-
-    @Test fun update() {
-        assertThat(subject.update(input), equalTo(expected))
-    }
-}
+})

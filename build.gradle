@@ -16,8 +16,13 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.4'
+    compile "org.springframework.boot:spring-boot-starter-websocket:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"
+    compile('io.moquette:moquette-broker:0.8.1') {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    compile 'org.fusesource.mqtt-client:mqtt-client:1.14'
 
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
