@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import kotlin.test.assertEquals
 
 fun TestRestTemplate.get(pathTemplate: String) = getForEntity(pathTemplate, Map::class.java)
+fun TestRestTemplate.getHealth() = get(HEALTH_API_PATH)
 
 data class TestMessage(var id: Int, var text: String)
 
@@ -29,8 +30,6 @@ data class TestMessage(var id: Int, var text: String)
 class ServiceIntegrationTest() {
 
     @Autowired lateinit var rest: TestRestTemplate;
-
-    fun TestRestTemplate.getHealth() = get(HEALTH_API_PATH)
 
     @Test fun healthApi() {
         val result = rest.getHealth()
@@ -41,25 +40,24 @@ class ServiceIntegrationTest() {
     }
 
     @Autowired lateinit var mqtt: MQTT;
+    val testTopics = arrayOf(Topic("test", QoS.AT_LEAST_ONCE))
+    val json = jacksonObjectMapper()
 
     @Test fun mqttMessaging() {
-        val json = jacksonObjectMapper()
-        val testTopics = arrayOf(Topic("/test", QoS.AT_LEAST_ONCE))
         val publisher = mqtt.blockingConnection()
         val subscriber = mqtt.blockingConnection()
-
         publisher.connect()
         subscriber.connect()
         subscriber.subscribe(testTopics)
 
-        val sentItem = TestMessage(1, "Hello")
-        val sentData = json.writeValueAsBytes(sentItem)
-        publisher.publish(testTopics.first().name(), Buffer(sentData), QoS.AT_LEAST_ONCE, false)
+        val message = TestMessage(1, "Hello")
+        publisher.publish(testTopics.first().name(), Buffer(json.writeValueAsBytes(message)), QoS.AT_LEAST_ONCE, false)
 
         val receivedMessage = subscriber.receive()
-        assertThat(receivedMessage.topic, equalTo("/test"))
         val receivedItem: TestMessage = json.readValue(receivedMessage.payload)
-        assertThat(receivedItem, equalTo(sentItem))
+
+        assertThat(receivedMessage.topic, equalTo("test"))
+        assertThat(receivedItem, equalTo(message))
 
         publisher.disconnect()
         subscriber.disconnect()

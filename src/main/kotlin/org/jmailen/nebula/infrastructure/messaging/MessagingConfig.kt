@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.*
+import javax.annotation.PreDestroy
 
 val MQTT_USERNAME = "mqtt"
 val MQTT_PASSWORD = "secret"
@@ -49,5 +50,10 @@ open class MessagingConfig() {
         client.setPassword(MQTT_PASSWORD)
 
         return client
+    }
+
+    @PreDestroy
+    open fun shutdown() {
+        mqttBroker().stopServer()
     }
 }
