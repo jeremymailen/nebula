@@ -1,9 +1,9 @@
 plugins {
     id "application"
-    id "com.zoltu.kotlin" version "1.0.2"
+    id "com.zoltu.kotlin" version "1.0.3"
 }
 
-def kotlinVersion = '1.0.2'
+def kotlinVersion = '1.0.3'
 def springBootVersion = '1.4.0.M3'
 
 repositories {
@@ -16,7 +16,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.4'
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.5'
     compile "org.springframework.boot:spring-boot-starter-websocket:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"
     compile('io.moquette:moquette-broker:0.8.1') {
@@ -26,9 +26,9 @@ dependencies {
 
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-    testCompile 'com.natpryce:hamkrest:1.1.0.0'
-    testCompile 'com.nhaarman:mockito-kotlin:0.4.0'
-    testCompile 'org.jetbrains.spek:spek:1.0.24'
+    testCompile 'com.natpryce:hamkrest:1.2.0.0'
+    testCompile 'com.nhaarman:mockito-kotlin:0.5.1'
+    testCompile 'org.jetbrains.spek:spek:1.0.25'
 }
 
 test.testLogging {
