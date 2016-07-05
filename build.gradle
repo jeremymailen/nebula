@@ -19,6 +19,7 @@ dependencies {
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.5'
     compile "org.springframework.boot:spring-boot-starter-websocket:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-devtools:$springBootVersion"
     compile('io.moquette:moquette-broker:0.8.1') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }

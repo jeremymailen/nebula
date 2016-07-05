@@ -46,6 +46,16 @@ Run tests and code checkers:
 
     gradle check
 
+### Using Live Reload
+
+Server and client can be reloaded as you make code changes. After `gradle run`, in a separate terminal run a watch build:
+
+    gradle assemble --continuous
+
+The server will be reloaded by Spring Boot devtools when new built artifacts are produced by `assemble`.
+
+The web client will also refresh if you install the [Chrome LiveReload Extension](https://chrome.google.com/webstore/search/livereload?hl=en).
+
 ## Running
 
     gradle run
