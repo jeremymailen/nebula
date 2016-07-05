@@ -5,13 +5,14 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.fusesource.hawtbuf.Buffer
 import org.fusesource.hawtbuf.UTF8Buffer
 import org.fusesource.mqtt.client.*
+import org.jmailen.nebula.infrastructure.messaging.support.jsonData
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.stereotype.Service
 
-const val PLAYER_JOIN_TOPIC = "/client/player/join"
+const val PLAYER_JOIN_TOPIC = "client/player/join"
 val playerSubscriptions = arrayOf(Topic(PLAYER_JOIN_TOPIC, QoS.AT_LEAST_ONCE))
 
-const val PLAYER_ADD_TOPIC = "/server/player/add"
+const val PLAYER_ADD_TOPIC = "server/player/add"
 
 @Service
 class PlayerPubSub(val mqtt: MQTT) : ExtendedListener {
@@ -49,8 +50,10 @@ class PlayerPubSub(val mqtt: MQTT) : ExtendedListener {
     }
 
     override fun onPublish(topic: UTF8Buffer, body: Buffer, ack: Runnable) {
+        logger.trace("Received message buffer: {}", body.toString())
+        val payload = body.jsonData()
         when (topic.toString()) {
-            PLAYER_JOIN_TOPIC -> handlePlayerJoin(json.readValue(body.data))
+            PLAYER_JOIN_TOPIC -> handlePlayerJoin(json.readValue(payload))
         }
         ack.run()
     }
@@ -59,8 +62,8 @@ class PlayerPubSub(val mqtt: MQTT) : ExtendedListener {
         onPublish(topic, body, { ack.onSuccess(null) })
     }
 
-    override fun onFailure(value: Throwable) {
-        logger.error("Error ")
+    override fun onFailure(err: Throwable) {
+        logger.error("Error: {}", err.toString())
     }
 
     fun handlePlayerJoin(player: Player) {
