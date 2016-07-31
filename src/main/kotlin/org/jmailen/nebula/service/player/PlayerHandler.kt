@@ -11,7 +11,7 @@ const val PLAYER_ADD_TOPIC = "server/player/add"
 
 @Service
 class PlayerHandler(val pubsub: MessagingPubSub) {
-    val logger = getLogger(this.javaClass)
+    val logger = getLogger(javaClass)
     val json = jacksonObjectMapper()
 
     init {

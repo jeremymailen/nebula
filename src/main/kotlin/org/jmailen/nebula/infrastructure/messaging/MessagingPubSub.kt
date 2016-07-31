@@ -4,14 +4,14 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallback
 import org.eclipse.paho.client.mqttv3.MqttClient
 import org.eclipse.paho.client.mqttv3.MqttMessage
-import org.slf4j.LoggerFactory
+import org.slf4j.LoggerFactory.getLogger
 import org.springframework.stereotype.Component
 import java.util.*
 import kotlin.concurrent.thread
 
 @Component
 class MessagingPubSub(val mqtt: MqttClient): MqttCallback {
-    val logger = LoggerFactory.getLogger(javaClass)
+    val logger = getLogger(javaClass)
     val subscribers = HashMap<String, MutableList<(ByteArray) -> Unit>>()
 
     init {
