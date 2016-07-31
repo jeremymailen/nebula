@@ -1,16 +1,9 @@
 package org.jmailen.nebula.infrastructure.messaging.support
 
-import org.fusesource.hawtbuf.Buffer
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 
-/**
- * Extend MQTT library to easily read tagged ascii: {"jsonkey": "value"} payloads.
- */
-fun Buffer.jsonData(): ByteArray {
-    val strData = String(this.data)
-    val markerStart = strData.indexOf('{')
-    if (markerStart > -1) {
-        return strData.substring(markerStart).toByteArray()
-    } else {
-        return this.data
-    }
+fun MqttConnectOptions.withCredentials(username: String, password: String): MqttConnectOptions {
+    this.userName = username
+    this.password = password.toCharArray()
+    return this
 }

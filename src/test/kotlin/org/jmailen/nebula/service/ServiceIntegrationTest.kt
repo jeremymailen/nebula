@@ -2,12 +2,9 @@ package org.jmailen.nebula.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import org.fusesource.hawtbuf.Buffer
-import org.fusesource.mqtt.client.MQTT
-import org.fusesource.mqtt.client.QoS
-import org.fusesource.mqtt.client.Topic
 import org.hamcrest.CoreMatchers.equalTo
 import org.jmailen.nebula.Service
+import org.jmailen.nebula.infrastructure.messaging.MessagingPubSub
 import org.jmailen.nebula.service.health.HEALTH_API_PATH
 import org.junit.Assert.assertThat
 import org.junit.Test
@@ -28,6 +25,7 @@ data class TestMessage(var id: Int, var text: String)
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = arrayOf(Service::class), webEnvironment = RANDOM_PORT)
 class ServiceIntegrationTest() {
+    val json = jacksonObjectMapper()
 
     @Autowired lateinit var rest: TestRestTemplate;
 
@@ -39,27 +37,19 @@ class ServiceIntegrationTest() {
         assertEquals("unknown", result.body["version"])
     }
 
-    @Autowired lateinit var mqtt: MQTT;
-    val testTopics = arrayOf(Topic("test", QoS.AT_LEAST_ONCE))
-    val json = jacksonObjectMapper()
+    @Autowired lateinit var pubsub: MessagingPubSub
 
-    @Test fun mqttMessaging() {
-        val publisher = mqtt.blockingConnection()
-        val subscriber = mqtt.blockingConnection()
-        publisher.connect()
-        subscriber.connect()
-        subscriber.subscribe(testTopics)
-
+    @Test(timeout = 1000L)
+    fun mqttMessaging() {
         val message = TestMessage(1, "Hello")
-        publisher.publish(testTopics.first().name(), Buffer(json.writeValueAsBytes(message)), QoS.AT_LEAST_ONCE, false)
+        var receivedMessage: TestMessage? = null
 
-        val receivedMessage = subscriber.receive()
-        val receivedItem: TestMessage = json.readValue(receivedMessage.payload)
+        pubsub.subscribe("test", fun(message: ByteArray) {
+            receivedMessage = json.readValue(message)
+        })
+        pubsub.publish("test", json.writeValueAsBytes(message))
 
-        assertThat(receivedMessage.topic, equalTo("test"))
-        assertThat(receivedItem, equalTo(message))
-
-        publisher.disconnect()
-        subscriber.disconnect()
+        while (receivedMessage == null) {}
+        assertThat(receivedMessage, equalTo(message))
     }
 }

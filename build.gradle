@@ -23,7 +23,7 @@ dependencies {
     compile('io.moquette:moquette-broker:0.8.1') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-    compile 'org.fusesource.mqtt-client:mqtt-client:1.14'
+    compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
 
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
