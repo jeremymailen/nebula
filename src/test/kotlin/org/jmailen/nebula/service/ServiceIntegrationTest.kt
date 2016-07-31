@@ -39,7 +39,7 @@ class ServiceIntegrationTest() {
 
     @Autowired lateinit var pubsub: MessagingPubSub
 
-    @Test(timeout = 1000L)
+    @Test(timeout = 10000L)
     fun mqttMessaging() {
         val message = TestMessage(1, "Hello")
         var receivedMessage: TestMessage? = null
