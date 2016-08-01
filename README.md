@@ -1,29 +1,36 @@
-# Nebula - Example Kotlin / Java Spring Boot Service
+# Nebula: Kotlin service with messaging driven web app
 
 [![Build Status](https://travis-ci.org/jeremymailen/nebula.svg?branch=master)](https://travis-ci.org/jeremymailen/nebula)
 
-Demonstrates how Kotlin improves developing in the Java ecosystem.
+Tech demo of using Kotlin to create services with popular Java and Web ecosystem frameworks and tooling:
 
-This project goes beyond the typical demo to answer what it might look like to build a Java ecosystem service in Kotlin which leverages popular frameworks and tools:
 - Spring Boot and Spring MVC
 - JUnit and Mockito
+- React and jspm
+- MQTT messaging
 - Gradle and Docker
 
-Objective is to demonstrate not only compatibility but more concise, safe, and expressive code. Caveat: I'm just learning Kotlin.
+Demonstrate compatibility, concise, expressive, and safe code, and support for sophisticated features.
+
+Caveat: I'm just learning Kotlin!
 
 ## Setup
 
 Assuming an OSX development environment. Reasonable equivalents available on Linux and Windows.
 
-Install necessary tooling via `brew`:
+Install necessary tooling via [brew](http://brew.sh):
 
     brew cask install java
     brew install kotlin
     brew install gradle
+    brew install npm
+    npm install jspm -g
 
 ### IntelliJ IDEA
 
-- Download IDEA CE 16
+IDEA is the recommended development environment for this project (but optional of course).
+
+- Download IDEA CE 16+
 - Install Kotlin plugin
 - Import Project > From existing model > Gradle
 - Specify GRADLE_HOME = /usr/local/Cellar/gradle/GRADLE_VERSION/libexec

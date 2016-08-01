@@ -32,6 +32,20 @@ dependencies {
     testCompile 'org.jetbrains.spek:spek:1.0.25'
 }
 
+def jspmBuild = "$buildDir/jspm"
+
+task jspmInstall(type: Exec, group: "Build tasks") {
+    commandLine 'jspm', 'install'
+    inputs.files 'package.json', 'config.js'
+    outputs.dir jspmBuild
+}
+
+//sourceSets.main.resources {
+//    srcDir jspmBuild
+//}
+//
+//processResources.dependsOn jspmInstall
+
 test.testLogging {
     exceptionFormat 'full'
     stackTraceFilters 'entry_point'
