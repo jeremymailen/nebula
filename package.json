@@ -9,6 +9,7 @@
       "packages": "build/jspm/static/jspm_packages"
     },
     "dependencies": {
+      "eclipse/paho.mqtt.javascript": "github:eclipse/paho.mqtt.javascript@^1.0.2",
       "node-uuid": "npm:node-uuid@^1.4.7",
       "react-dom": "npm:react-dom@^15.3.0"
     },

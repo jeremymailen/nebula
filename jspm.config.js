@@ -130,11 +130,16 @@ SystemJS.config({
         },
         "*.jsx": {
           "babelOptions": {
-            "plugins": ["babel-plugin-transform-react-jsx"]
+            "plugins": [
+              "babel-plugin-transform-react-jsx"
+            ]
           }
         }
       }
     }
+  },
+  map: {
+    "paho-mqtt": "github:eclipse/paho.mqtt.javascript@1.0.2/src/mqttws31.js"
   }
 });
 
@@ -151,6 +156,7 @@ SystemJS.config({
     "constants": "github:jspm/nodelibs-constants@0.2.0-alpha",
     "crypto": "github:jspm/nodelibs-crypto@0.2.0-alpha",
     "domain": "github:jspm/nodelibs-domain@0.2.0-alpha",
+    "eclipse/paho.mqtt.javascript": "github:eclipse/paho.mqtt.javascript@1.0.2",
     "events": "github:jspm/nodelibs-events@0.2.0-alpha",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "http": "github:jspm/nodelibs-http@0.2.0-alpha",

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import uuid from 'node-uuid';
+import Paho from 'paho-mqtt';
 
 var mqtt = new Paho.MQTT.Client(window.location.hostname, 8004, '/', 'webapp.' + uuid.v4());
 
