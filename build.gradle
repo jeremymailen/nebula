@@ -36,15 +36,20 @@ def jspmBuild = "$buildDir/jspm"
 
 task jspmInstall(type: Exec, group: "Build tasks") {
     commandLine 'jspm', 'install'
-    inputs.files 'package.json', 'config.js'
+    inputs.files 'package.json', 'jspm.config.js'
     outputs.dir jspmBuild
 }
 
-//sourceSets.main.resources {
-//    srcDir jspmBuild
-//}
-//
-//processResources.dependsOn jspmInstall
+task jspmConfig(type: Sync) {
+    from 'jspm.config.js'
+    into "$jspmBuild/static"
+}
+
+sourceSets.main.resources {
+    srcDir jspmBuild
+}
+
+processResources.dependsOn jspmInstall, jspmConfig
 
 test.testLogging {
     exceptionFormat 'full'

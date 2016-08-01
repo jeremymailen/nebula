@@ -24,7 +24,7 @@ Install necessary tooling via [brew](http://brew.sh):
     brew install kotlin
     brew install gradle
     brew install npm
-    npm install jspm -g
+    npm install jspm@beta -g
 
 ### IntelliJ IDEA
 
