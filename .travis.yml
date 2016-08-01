@@ -8,4 +8,4 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 before_install:
-  - npm install jspm@beta
+  - npm install -g jspm@beta
