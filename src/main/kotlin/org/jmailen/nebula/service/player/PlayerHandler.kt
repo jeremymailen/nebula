@@ -12,7 +12,7 @@ class PlayerHandler(val pubsub: MessagingPubSub) {
     val logger = getLogger(javaClass)
 
     init {
-        pubsub.subscribe(PLAYER_JOIN_TOPIC, Player::class.java, fun(player: Player) = handlePlayerJoin(player))
+        pubsub.subscribe(PLAYER_JOIN_TOPIC, Player::class.java) { handlePlayerJoin(it) }
     }
 
     fun handlePlayerJoin(player: Player) {

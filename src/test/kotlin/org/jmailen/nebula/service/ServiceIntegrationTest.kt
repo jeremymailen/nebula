@@ -41,9 +41,7 @@ class ServiceIntegrationTest() {
         val message = TestMessage(1, "Hello")
         var receivedMessage: TestMessage? = null
 
-        pubsub.subscribe("test", TestMessage::class.java, fun(m: TestMessage) {
-            receivedMessage = m
-        })
+        pubsub.subscribe("test", TestMessage::class.java) { receivedMessage = it }
         pubsub.publish("test", message)
 
         while (receivedMessage == null) {}
