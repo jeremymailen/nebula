@@ -1,7 +1,5 @@
 package org.jmailen.nebula.service
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.hamcrest.CoreMatchers.equalTo
 import org.jmailen.nebula.Service
 import org.jmailen.nebula.infrastructure.messaging.MessagingPubSub
@@ -25,7 +23,6 @@ data class TestMessage(var id: Int, var text: String)
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = arrayOf(Service::class), webEnvironment = RANDOM_PORT)
 class ServiceIntegrationTest() {
-    val json = jacksonObjectMapper()
 
     @Autowired lateinit var rest: TestRestTemplate;
 
@@ -44,10 +41,10 @@ class ServiceIntegrationTest() {
         val message = TestMessage(1, "Hello")
         var receivedMessage: TestMessage? = null
 
-        pubsub.subscribe("test", fun(message: ByteArray) {
-            receivedMessage = json.readValue(message)
+        pubsub.subscribe("test", TestMessage::class.java, fun(m: TestMessage) {
+            receivedMessage = m
         })
-        pubsub.publish("test", json.writeValueAsBytes(message))
+        pubsub.publish("test", message)
 
         while (receivedMessage == null) {}
         assertThat(receivedMessage, equalTo(message))
