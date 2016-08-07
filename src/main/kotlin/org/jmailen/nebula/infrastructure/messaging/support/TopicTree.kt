@@ -28,40 +28,38 @@ private class TopicTreeNode() {
     val children = mutableMapOf<String, TopicTreeNode>()
 
     fun subscribe(topicElements: MutableList<String>, notifier: (ByteArray) -> Unit): Boolean {
-        if (topicElements.emptyPath()) {
+        if (topicElements.isEmpty()) {
             subscribers.add(notifier)
             return subscribers.size == 1
 
         } else {
-            val front = topicElements.pop()
-            when (front) {
+            val prefix = topicElements.pop()
+            when (prefix) {
                 WILDCARD_MULTI_LEVEL -> {
                     subtreeSubscribers.add(notifier)
                     return subtreeSubscribers.size == 1
                 }
                 else -> {
-                    if (children[front] == null) {
-                        children[front] = TopicTreeNode()
+                    if (children[prefix] == null) {
+                        children[prefix] = TopicTreeNode()
                     }
-                    return children[front]!!.subscribe(topicElements, notifier)
+                    return children[prefix]!!.subscribe(topicElements, notifier)
                 }
             }
         }
     }
 
     fun deliver(topicElements: MutableList<String>, message: ByteArray) {
-        if (topicElements.emptyPath()) {
+        if (topicElements.isEmpty()) {
             subscribers.forEach { it(message) }
         } else {
             subtreeSubscribers.forEach { it(message) }
 
-            val front = topicElements.pop()
+            val prefix = topicElements.pop()
             children[WILDCARD_SINGLE_LEVEL]?.deliver(topicElements, message)
-            children[front]?.deliver(topicElements, message)
+            children[prefix]?.deliver(topicElements, message)
         }
     }
 }
-
-fun <T> List<T>.emptyPath() = isEmpty() || (size == 1 && first() == "")
 
 fun <T> MutableList<T>.pop() = removeAt(0)
