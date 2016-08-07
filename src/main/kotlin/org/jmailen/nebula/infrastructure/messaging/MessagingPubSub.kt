@@ -5,9 +5,9 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallback
 import org.eclipse.paho.client.mqttv3.MqttClient
 import org.eclipse.paho.client.mqttv3.MqttMessage
+import org.jmailen.nebula.infrastructure.messaging.support.TopicTree
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.stereotype.Component
-import java.util.*
 import kotlin.concurrent.thread
 
 
@@ -15,23 +15,22 @@ import kotlin.concurrent.thread
 class MessagingPubSub(val mqtt: MqttClient): MqttCallback {
     val logger = getLogger(javaClass)
     val json = jacksonObjectMapper()
-
-    val subscribers = HashMap<String, MutableList<(ByteArray) -> Unit>>()
+    var subscribers = TopicTree()
 
     init {
         mqtt.setCallback(this)
     }
 
-    fun <T : Any> subscribe(topic: String, type: Class<T>, callback: (T) -> Unit) {
-        val notifier = fun(payload: ByteArray) = callback(json.readValue(payload, type))
+    fun <T : Any> subscribe(topicFilter: String, type: Class<T>, callback: (T) -> Unit) {
+        val notifier = fun(payload: ByteArray) {
+            thread {
+                callback(json.readValue(payload, type))
+            }
+        }
 
         synchronized(subscribers, {
-            if (subscribers[topic] != null) {
-                subscribers[topic]?.add(notifier)
-            } else {
-                subscribers[topic] = mutableListOf(notifier)
-                mqtt.subscribe(topic)
-            }
+            val newSubscription = subscribers.subscribe(topicFilter, notifier)
+            if (newSubscription) mqtt.subscribe(topicFilter)
         })
     }
 
@@ -47,15 +46,10 @@ class MessagingPubSub(val mqtt: MqttClient): MqttCallback {
     }
 
     override fun messageArrived(topic: String?, message: MqttMessage?) {
-        // TODO: route to topics with wildcards
-        subscribers[topic]?.forEach { notifier ->
-            thread {
-                try {
-                    notifier(message!!.payload)
-                } catch (t: Throwable) {
-                    logger.error("Processing message for topic: {}, error: {}", topic, t.message)
-                }
-            }
+        try {
+            subscribers.deliver(topic!!, message!!.payload)
+        } catch (t: Throwable) {
+            logger.error("Processing message on topic: {}, error: {}", topic, t.message)
         }
     }
 
