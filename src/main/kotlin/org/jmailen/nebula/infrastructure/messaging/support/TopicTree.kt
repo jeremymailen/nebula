@@ -12,7 +12,7 @@ class TopicTree() {
         if (topicFilter.isEmpty()) {
             throw IllegalArgumentException("topicFilter must not be an empty string")
         }
-        return root.subscribe(topicFilter, elements(topicFilter), notifier)
+        return root.subscribe(elements(topicFilter), notifier)
     }
 
     fun deliver(topic: String, message: ByteArray) {
@@ -27,7 +27,7 @@ private class TopicTreeNode() {
     val subtreeSubscribers = mutableListOf<(ByteArray) -> Unit>()
     val children = mutableMapOf<String, TopicTreeNode>()
 
-    fun subscribe(topicFilter: String, topicElements: MutableList<String>, notifier: (ByteArray) -> Unit): Boolean {
+    fun subscribe(topicElements: MutableList<String>, notifier: (ByteArray) -> Unit): Boolean {
         if (topicElements.emptyPath()) {
             subscribers.add(notifier)
             return subscribers.size == 1
@@ -43,7 +43,7 @@ private class TopicTreeNode() {
                     if (children[front] == null) {
                         children[front] = TopicTreeNode()
                     }
-                    return children[front]!!.subscribe(topicFilter, topicElements, notifier)
+                    return children[front]!!.subscribe(topicElements, notifier)
                 }
             }
         }
