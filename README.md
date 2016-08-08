@@ -66,6 +66,7 @@ The web client will also refresh if you install the [Chrome LiveReload Extension
 ## Running
 
     gradle run
+    http://localhost:8002
     http://localhost:8002/api/health
     http://localhost:8002/api/profiles
     http://localhost:8002/api/profiles/1

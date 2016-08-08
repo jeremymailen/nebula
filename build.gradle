@@ -19,11 +19,12 @@ dependencies {
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.5'
     compile "org.springframework.boot:spring-boot-starter-websocket:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-devtools:$springBootVersion"
+    compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
     compile('io.moquette:moquette-broker:0.8.1') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-    compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
+
+    runtime "org.springframework.boot:spring-boot-devtools:$springBootVersion"
 
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
@@ -56,13 +57,15 @@ test.testLogging {
     stackTraceFilters 'entry_point'
 }
 
+def mainClass ='org.jmailen.nebula.MainKt'
+
 run {
-    main = 'org.jmailen.nebula.MainKt'
+    main = mainClass
     environment('VERSION', project.version)
 }
 
 startScripts {
-    mainClassName = 'org.jmailen.nebula.MainKt'
+    mainClassName = mainClass
 }
 
 distTar.archiveName = 'nebula.tar'
