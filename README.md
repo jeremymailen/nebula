@@ -68,8 +68,8 @@ The web client will also refresh if you install the [Chrome LiveReload Extension
     gradle run
     http://localhost:8002
     http://localhost:8002/api/health
-    http://localhost:8002/api/profiles
-    http://localhost:8002/api/profiles/1
+    http://localhost:8002/api/players
+    http://localhost:8002/api/players/<id>
 
 For remote debugging (will pause until debugger connected):
 

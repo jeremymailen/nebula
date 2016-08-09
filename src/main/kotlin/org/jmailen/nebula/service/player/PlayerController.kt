@@ -1,20 +1,20 @@
-package org.jmailen.nebula.service.profile
+package org.jmailen.nebula.service.player
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
-const val PROFILE_API_PATH = "/api/profiles"
+const val PLAYER_API_PATH = "/api/players"
 
 @RestController
-@RequestMapping(PROFILE_API_PATH)
-class ProfileController(val store: ProfileStore) {
+@RequestMapping(PLAYER_API_PATH)
+class PlayerController(val store: PlayerStore) {
 
     @GetMapping
     fun list() = store.list()
 
     @GetMapping("/{id}")
-    fun get(@PathVariable id: Int) = store.get(id)
+    fun get(@PathVariable id: String) = store.get(id)
 
     @DeleteMapping
     fun deleteAll(res: HttpServletResponse) {

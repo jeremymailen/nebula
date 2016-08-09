@@ -8,16 +8,17 @@ const val PLAYER_JOIN_TOPIC = "client/player/join"
 const val PLAYER_ADD_TOPIC = "server/player/add"
 
 @Service
-class PlayerHandler(val pubsub: MessagingPubSub) {
+class PlayerHandler(val pubsub: MessagingPubSub, val store: PlayerStore) {
     val logger = getLogger(javaClass)
 
     init {
+        store.handler = this // Spring should be able to do that with setter injection, but it isn't
         pubsub.subscribe(PLAYER_JOIN_TOPIC, Player::class.java) { handlePlayerJoin(it) }
     }
 
     fun handlePlayerJoin(player: Player) {
         logger.info("Player joined: {}", player)
-        publishAddPlayer(player)
+        store.add(player)
     }
 
     fun publishAddPlayer(player: Player) {
