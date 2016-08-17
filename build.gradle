@@ -75,3 +75,8 @@ task image(type: Exec, dependsOn: distTar, group: 'build') {
     description 'Build Docker image'
     commandLine 'docker', 'build', '-t', "jmailen/nebula:$project.version", './'
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
+
