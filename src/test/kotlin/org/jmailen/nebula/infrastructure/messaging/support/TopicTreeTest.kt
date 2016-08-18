@@ -10,7 +10,7 @@ import kotlin.test.assertTrue
 
 data class TestCase(val topicFilter: String, val topic: String, val shouldMatch: Boolean)
 
-class TopicTreeNodeTest : Spek({
+class TopicTreeTest : Spek({
 
     describe("TopicTreeTest") {
 

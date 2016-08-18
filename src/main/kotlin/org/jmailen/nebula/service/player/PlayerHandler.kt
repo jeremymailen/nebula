@@ -8,7 +8,7 @@ const val PLAYER_JOIN_TOPIC = "client/player/join"
 const val PLAYER_ADD_TOPIC = "server/player/add"
 
 @Service
-class PlayerHandler(val pubsub: MessagingPubSub, val store: PlayerStore) {
+open class PlayerHandler(val pubsub: MessagingPubSub, val store: PlayerStore) {
     val logger = getLogger(javaClass)
 
     init {
@@ -21,7 +21,7 @@ class PlayerHandler(val pubsub: MessagingPubSub, val store: PlayerStore) {
         store.add(player)
     }
 
-    fun publishAddPlayer(player: Player) {
+    open fun publishAddPlayer(player: Player) {
         pubsub.publish(PLAYER_ADD_TOPIC, player)
     }
 }
