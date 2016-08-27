@@ -21,11 +21,13 @@ function receive(message) {
     console.log('MQTT message received: topic =', message.destinationName, ' payload =', message.payloadString);
 }
 
-function send(payload, topic) {
+export function subscribe(topic, hander) {
+
+}
+
+export function send(payload, topic) {
     var msg = new Paho.MQTT.Message(JSON.stringify(payload));
     msg.destinationName = topic;
     msg.qos = 1;
     mqtt.send(msg);
 }
-
-export { send };

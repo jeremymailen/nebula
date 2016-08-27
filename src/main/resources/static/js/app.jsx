@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import uuid from 'node-uuid';
-import { send } from 'js/infrastructure/pubsub';
+import * as pubsub from 'js/infrastructure/pubsub';
 
 var PlayerLogin = React.createClass({
     getInitialState: function() {
@@ -22,7 +22,7 @@ var PlayerLogin = React.createClass({
             name: this.state.player.name.trim()
         };
         this.setState({player: player});
-        send(player, 'client/player/join');
+        pubsub.send(player, 'client/player/join');
     },
     render: function() {
         return (
